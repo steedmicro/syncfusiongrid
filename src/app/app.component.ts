@@ -1,24 +1,24 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from "@angular/core";
 
 // Import neccessary classes from @syncfusion module
-import { DataManager } from '@syncfusion/ej2-data';
-import { ColumnModel, RowPosition } from '@syncfusion/ej2-treegrid';
-import { ContextMenuItemModel, TextAlign } from '@syncfusion/ej2-grids';
-import { BeforeOpenCloseEventArgs } from '@syncfusion/ej2-inputs';
-import { MenuEventArgs } from '@syncfusion/ej2-navigations';
-import { TreeGridComponent } from '@syncfusion/ej2-angular-treegrid';
-import { EmitType } from '@syncfusion/ej2-base';
-import { DialogComponent } from '@syncfusion/ej2-angular-popups';
+import { DataManager } from "@syncfusion/ej2-data";
+import { ColumnModel, RowPosition } from "@syncfusion/ej2-treegrid";
+import { ContextMenuItemModel, TextAlign } from "@syncfusion/ej2-grids";
+import { BeforeOpenCloseEventArgs } from "@syncfusion/ej2-inputs";
+import { MenuEventArgs } from "@syncfusion/ej2-navigations";
+import { TreeGridComponent } from "@syncfusion/ej2-angular-treegrid";
+import { EmitType } from "@syncfusion/ej2-base";
+import { DialogComponent } from "@syncfusion/ej2-angular-popups";
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormsModule,
-} from '@angular/forms';
+} from "@angular/forms";
 // Import sample test data from sample typescript file in your local host.
-import { sampleData } from './syncgrid.sample';
+import { sampleData } from "./syncgrid.sample";
 // Import classes
-import { CustomColumnModel } from './customcolumnmodel';
+import { CustomColumnModel } from "./customcolumnmodel";
 // Import constants from constants.ts
 import {
   ADDCHILD_ROW_MENU_ID,
@@ -55,15 +55,15 @@ import {
   PASTENEXT_ROW_MENU_LABEL,
   TREEGRID_HEADER_CELL_QUERY,
   TREEGRID_ROW_DRAG_DROP_CELL_QUERY,
-} from './constants';
-import { getIndexOfChildElement } from './utils';
+} from "./constants";
+import { getIndexOfChildElement } from "./utils";
 
-import * as GridEvents from '@syncfusion/ej2-grids/src/grid/base/constant';
+import * as GridEvents from "@syncfusion/ej2-grids/src/grid/base/constant";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 /**
  * App Component is our main component.
@@ -71,12 +71,12 @@ import * as GridEvents from '@syncfusion/ej2-grids/src/grid/base/constant';
  */
 export class AppComponent {
   // TreeGrid Component
-  @ViewChild('treegrid')
+  @ViewChild("treegrid")
   public treeGrid!: TreeGridComponent;
   // Dialog Component
-  @ViewChild('dialog') dialog!: DialogComponent;
+  @ViewChild("dialog") dialog!: DialogComponent;
   // Create element reference for dialog target element.
-  @ViewChild('treegrid', { read: ElementRef, static: true })
+  @ViewChild("treegrid", { read: ElementRef, static: true })
   container!: ElementRef;
   // Dialog Form
   dialogForm!: FormGroup;
@@ -89,126 +89,126 @@ export class AppComponent {
   // Columns of our treegrid
   public columns: ColumnModel[] = [
     {
-      field: 'TaskID',
-      headerText: 'Task ID',
-      textAlign: 'Right',
+      field: "TaskID",
+      headerText: "Task ID",
+      textAlign: "Right",
       isPrimaryKey: true,
-      type: 'Number',
-      editType: 'numericedit',
+      type: "Number",
+      editType: "numericedit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'TaskName',
-      headerText: 'Task Name',
-      textAlign: 'Left',
-      type: 'Text',
+      field: "TaskName",
+      headerText: "Task Name",
+      textAlign: "Left",
+      type: "Text",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'StartDate',
-      headerText: 'Start Date',
-      textAlign: 'Right',
-      type: 'date',
-      format: 'yMd',
-      editType: 'datepickeredit',
+      field: "StartDate",
+      headerText: "Start Date",
+      textAlign: "Right",
+      type: "date",
+      format: "yMd",
+      editType: "datepickeredit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'EndDate',
-      headerText: 'End Date',
-      textAlign: 'Right',
-      type: 'date',
-      format: 'yMd',
-      editType: 'datepickeredit',
+      field: "EndDate",
+      headerText: "End Date",
+      textAlign: "Right",
+      type: "date",
+      format: "yMd",
+      editType: "datepickeredit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'Duration',
-      headerText: 'Duration',
-      textAlign: 'Right',
+      field: "Duration",
+      headerText: "Duration",
+      textAlign: "Right",
 
-      type: 'Number',
-      editType: 'numericedit',
+      type: "Number",
+      editType: "numericedit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'Progress',
-      headerText: 'Progress',
-      textAlign: 'Right',
+      field: "Progress",
+      headerText: "Progress",
+      textAlign: "Right",
 
-      type: 'DropDownList',
-      editType: 'dropdownedit',
+      type: "DropDownList",
+      editType: "dropdownedit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
     {
-      field: 'Priority',
-      headerText: 'Priority',
-      textAlign: 'Right',
+      field: "Priority",
+      headerText: "Priority",
+      textAlign: "Right",
 
-      type: 'DropDownList',
-      editType: 'dropdownedit',
+      type: "DropDownList",
+      editType: "dropdownedit",
       minWidth: 100,
       customAttributes: {
         style: {
-          'background-color': '#ffffff',
-          color: '#000000',
-          'font-size': '15px',
-          'white-space': 'pre-line',
-          'overflow-wrap': 'normal',
+          "background-color": "#ffffff",
+          color: "#000000",
+          "font-size": "15px",
+          "white-space": "pre-line",
+          "overflow-wrap": "normal",
         },
       },
     },
@@ -216,88 +216,88 @@ export class AppComponent {
   // Custom column models of our treegrid
   public customColumns: CustomColumnModel[] = [
     {
-      field: 'TaskID',
-      name: 'Task ID',
-      dataType: 'Number',
-      defaultValue: '',
+      field: "TaskID",
+      name: "Task ID",
+      dataType: "Number",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
     {
-      field: 'TaskName',
-      name: 'Task Name',
-      dataType: 'Text',
-      defaultValue: '',
+      field: "TaskName",
+      name: "Task Name",
+      dataType: "Text",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Left',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Left",
+      textWrap: "WordWrap",
     },
     {
-      field: 'StartDate',
-      name: 'Start Date',
-      dataType: 'Date',
-      defaultValue: '',
+      field: "StartDate",
+      name: "Start Date",
+      dataType: "Date",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
     {
-      field: 'EndDate',
-      name: 'End Date',
-      dataType: 'Date',
-      defaultValue: '',
+      field: "EndDate",
+      name: "End Date",
+      dataType: "Date",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
     {
-      field: 'Duration',
-      name: 'Duration',
-      dataType: 'Number',
-      defaultValue: '',
+      field: "Duration",
+      name: "Duration",
+      dataType: "Number",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
     {
-      field: 'Progress',
-      name: 'Progress',
-      dataType: 'DropDownList',
-      defaultValue: '',
+      field: "Progress",
+      name: "Progress",
+      dataType: "DropDownList",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
     {
-      field: 'Priority',
-      name: 'Priority',
-      dataType: 'DropDownList',
-      defaultValue: '',
+      field: "Priority",
+      name: "Priority",
+      dataType: "DropDownList",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Right',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Right",
+      textWrap: "WordWrap",
     },
   ];
   // Context Menu Items of treegrid
@@ -400,47 +400,47 @@ export class AppComponent {
   public menuID!: string;
   // Column Data Types
   public columnDataTypes: string[] = [
-    'Text',
-    'Number',
-    'Date',
-    'Boolean',
-    'DropDownList',
+    "Text",
+    "Number",
+    "Date",
+    "Boolean",
+    "DropDownList",
   ];
   // Data Type To Type Map
   public mapDataTypeToType: any = {
-    Text: 'text',
-    Number: 'number',
-    Date: 'date',
-    Boolean: 'boolean',
-    DropDownList: 'dropdown',
+    Text: "text",
+    Number: "number",
+    Date: "date",
+    Boolean: "boolean",
+    DropDownList: "dropdown",
   };
   // Data Type To Format Map
   public mapDataTypeToFormat: any = {
     Text: undefined,
     Number: undefined,
-    Date: 'yMd',
+    Date: "yMd",
     Boolean: undefined,
     DropDownList: undefined,
   };
   // Data Type To EditType Map
   public mapDataTypeToEditType: any = {
     Text: undefined,
-    Number: 'numericedit',
-    Date: 'dateedit',
-    Boolean: 'booleanedit',
-    DropDownList: 'dropdownedit',
+    Number: "numericedit",
+    Date: "dateedit",
+    Boolean: "booleanedit",
+    DropDownList: "dropdownedit",
   };
   // Edit Settings
   public editSettings: any = {
     allowEditing: true,
     allowAdding: true,
     allowDeleting: true,
-    mode: 'Dialog',
+    mode: "Dialog",
   };
   // Column Alignments
-  public columnAlignments: string[] = ['Left', 'Right', 'Center', 'Justify'];
+  public columnAlignments: string[] = ["Left", "Right", "Center", "Justify"];
   // Column Text Wraps
-  public columnTextWraps: string[] = ['WordWrap', 'NoWrap'];
+  public columnTextWraps: string[] = ["WordWrap", "NoWrap"];
   // Constructor
   constructor(@Inject(FormBuilder) private builder: FormBuilder) {
     this.build = builder;
@@ -449,20 +449,20 @@ export class AppComponent {
   // Create Dialog form
   createForm() {
     this.dialogForm = this.build.group({
-      columnField: [''],
-      columnName: ['', Validators.required],
-      columnDataType: ['', Validators.required],
-      columnDefaultValue: [''],
-      columnMinimumWidth: ['', Validators.required],
-      columnFontSize: ['', Validators.required],
-      columnFontColor: ['', Validators.required],
-      columnBackgroundColor: ['', Validators.required],
-      columnAlignment: ['', Validators.required],
-      columnTextWrap: ['', Validators.required],
+      columnField: [""],
+      columnName: ["", Validators.required],
+      columnDataType: ["", Validators.required],
+      columnDefaultValue: [""],
+      columnMinimumWidth: ["", Validators.required],
+      columnFontSize: ["", Validators.required],
+      columnFontColor: ["", Validators.required],
+      columnBackgroundColor: ["", Validators.required],
+      columnAlignment: ["", Validators.required],
+      columnTextWrap: ["", Validators.required],
     });
   }
   // Get next ID
-  public taskID: number = 995;
+  public taskID: number = 1000;
   public getTaskID() {
     return this.taskID;
   }
@@ -471,43 +471,43 @@ export class AppComponent {
   }
   // Get columnField
   get columnField() {
-    return this.dialogForm.get('columnField');
+    return this.dialogForm.get("columnField");
   }
   // Get columnName
   get columnName() {
-    return this.dialogForm.get('columnName');
+    return this.dialogForm.get("columnName");
   }
   // Get columnDataType
   get columnDataType() {
-    return this.dialogForm.get('columnDataType');
+    return this.dialogForm.get("columnDataType");
   }
   // Get columnDataType
   get columnDefaultValue() {
-    return this.dialogForm.get('columnDefaultValue');
+    return this.dialogForm.get("columnDefaultValue");
   }
   // Get columnDataType
   get columnMinimumWidth() {
-    return this.dialogForm.get('columnMinimumWidth');
+    return this.dialogForm.get("columnMinimumWidth");
   }
   // Get columnDataType
   get columnFontSize() {
-    return this.dialogForm.get('columnFontSize');
+    return this.dialogForm.get("columnFontSize");
   }
   // Get columnDataType
   get columnFontColor() {
-    return this.dialogForm.get('columnFontColor');
+    return this.dialogForm.get("columnFontColor");
   }
   // Get columnDataType
   get columnBackgroundColor() {
-    return this.dialogForm.get('columnBackgroundColor');
+    return this.dialogForm.get("columnBackgroundColor");
   }
   // Get columnDataType
   get columnAlignment() {
-    return this.dialogForm.get('columnAlignment');
+    return this.dialogForm.get("columnAlignment");
   }
   // Get columnDataType
   get columnTextWrap() {
-    return this.dialogForm.get('columnTextWrap');
+    return this.dialogForm.get("columnTextWrap");
   }
   // Event called when form initialized.
   ngOnInit() {
@@ -602,7 +602,7 @@ export class AppComponent {
     menu.childNodes.forEach((node, index) => {
       let element = node as Element;
       // Render Menu Items
-      switch (element.getAttribute('id')) {
+      switch (element.getAttribute("id")) {
         case FREEZE_COLUMN_MENU_ID:
           element.innerHTML =
             FREEZE_COLUMN_MENU_LABEL +
@@ -713,29 +713,29 @@ export class AppComponent {
       defaultValue: customColumn.defaultValue,
       customAttributes: {
         style: {
-          'background-color': customColumn.backgroundColor,
+          "background-color": customColumn.backgroundColor,
           color: customColumn.fontColor,
-          'font-size': customColumn.fontSize + 'px',
-          'white-space': 'pre-line',
-          'overflow-wrap':
-            customColumn.textWrap === 'WordWrap' ? 'normal' : 'break-word',
+          "font-size": customColumn.fontSize + "px",
+          "white-space": "pre-line",
+          "overflow-wrap":
+            customColumn.textWrap === "WordWrap" ? "normal" : "break-word",
         },
       },
     };
   }
   // Calls when Add Next Row clicked
   onAddNextRow() {
-    $('#_gridcontrolTaskID').val(this.getTaskID());
-    $('#_gridcontrolTaskID').attr('disabled', 'true');
-    $('.e-footer-content .e-primary').click(() => {
+    $("#_gridcontrolTaskID").val(this.getTaskID());
+    $("#_gridcontrolTaskID").attr("disabled", "true");
+    $(".e-footer-content .e-primary").click(() => {
       this.increaseTaskID();
     });
   }
   // Calls when Add Child Row clicked
   onAddChildRow() {
-    $('#_gridcontrolTaskID').val(this.getTaskID());
-    $('#_gridcontrolTaskID').attr('disabled', 'true');
-    $('.e-footer-content .e-primary').click(() => {
+    $("#_gridcontrolTaskID").val(this.getTaskID());
+    $("#_gridcontrolTaskID").attr("disabled", "true");
+    $(".e-footer-content .e-primary").click(() => {
       this.increaseTaskID();
     });
   }
@@ -765,17 +765,17 @@ export class AppComponent {
     this.copiedRow.forEach((rowInd: any) => {
       let row = this.treeGrid.getRowByIndex(rowInd);
 
-      var uid: string = row.getAttribute('data-uid') as string;
+      var uid: string = row.getAttribute("data-uid") as string;
       var rowObj = this.treeGrid.grid.getRowObjectFromUID(uid);
 
       let OneRowIndexes = this.getIdNodeTreeFromRow(rowObj.data);
       OneRowIndexes.forEach((el: any) => this.treeRowIndexes.push(el));
 
-      row.classList.remove('bgcolor');
+      row.classList.remove("bgcolor");
       for (let j = 0, l = row.children.length; j < l; j++) {
         row.children[j].setAttribute(
-          'style',
-          row.children[j].getAttribute('prev-style') as string
+          "style",
+          row.children[j].getAttribute("prev-style") as string
         );
       }
     });
@@ -806,16 +806,16 @@ export class AppComponent {
   // Calls when New clicked by user on column header menu.
   onNewColumn() {
     this.onOpenDialog({
-      field: '',
-      name: '',
-      dataType: 'Text',
-      defaultValue: '',
+      field: "",
+      name: "",
+      dataType: "Text",
+      defaultValue: "",
       minimumWidth: 100,
       fontSize: 15,
-      fontColor: '#000000',
-      backgroundColor: '#ffffff',
-      alignment: 'Left',
-      textWrap: 'WordWrap',
+      fontColor: "#000000",
+      backgroundColor: "#ffffff",
+      alignment: "Left",
+      textWrap: "WordWrap",
     });
   }
   // Calls when Del clicked by user on column header menu.
@@ -880,41 +880,41 @@ export class AppComponent {
     for (si = 0, sl = sourceIndexes.length; si < sl; si++) {
       sourceIndex = sourceIndexes[si];
       soruceItem = items[sourceIndex];
-      mapIndexToIscopied[soruceItem['TaskID']] = 1;
+      mapIndexToIscopied[soruceItem["TaskID"]] = 1;
       for (i = sourceIndex + 1; i < l; i++) {
         item = items[i];
-        parentIndex = item['ParentItem'];
+        parentIndex = item["ParentItem"];
         if (mapIndexToIscopied[parentIndex] === 1)
-          mapIndexToIscopied[item['TaskID']] = 1;
+          mapIndexToIscopied[item["TaskID"]] = 1;
       }
     }
     for (i = 0; i < l; i++) {
-      if (mapIndexToIscopied[items[i]['TaskID']] === 1) {
+      if (mapIndexToIscopied[items[i]["TaskID"]] === 1) {
         item = Object.assign({}, items[i]);
-        prevID = item['TaskID'];
-        item['TaskID'] = this.getTaskID();
+        prevID = item["TaskID"];
+        item["TaskID"] = this.getTaskID();
         this.increaseTaskID();
-        mapPrevIDToNextID[prevID] = item['TaskID'];
-        if (!mapIndexToIscopied[items[i]['ParentItem']]) {
-          item['ParentItem'] = isSibling
-            ? items[targetIndex]['ParentItem']
-            : items[targetIndex]['TaskID'];
+        mapPrevIDToNextID[prevID] = item["TaskID"];
+        if (!mapIndexToIscopied[items[i]["ParentItem"]]) {
+          item["ParentItem"] = isSibling
+            ? items[targetIndex]["ParentItem"]
+            : items[targetIndex]["TaskID"];
         } else {
-          item['ParentItem'] = mapPrevIDToNextID[items[i]['ParentItem']];
+          item["ParentItem"] = mapPrevIDToNextID[items[i]["ParentItem"]];
         }
         insertedItems.push(item);
       }
     }
     if (!isSibling) {
-      items[targetIndex]['isParent'] = true;
+      items[targetIndex]["isParent"] = true;
     }
     if (!isSibling) insertionIndex = targetIndex + 1;
     else {
       for (
         insertionIndex = targetIndex + 1;
         insertionIndex < l &&
-        items[targetIndex]['ParentItem'] !==
-          items[insertionIndex]['ParentItem'];
+        items[targetIndex]["ParentItem"] !==
+          items[insertionIndex]["ParentItem"];
         insertionIndex++
       );
     }
@@ -925,7 +925,7 @@ export class AppComponent {
     ];
     if (isCut) {
       newItems.forEach((value) => {
-        if (!mapIndexToIscopied[value['TaskID']]) {
+        if (!mapIndexToIscopied[value["TaskID"]]) {
           cuttedItems.push(value);
         }
       });
@@ -942,7 +942,7 @@ export class AppComponent {
   // Variables
 
   public cutMode: boolean = false;
-  public copyContent: string = '';
+  public copyContent: string = "";
   public copiedRow: any;
   public treeRowIndexes: any;
 
@@ -962,38 +962,38 @@ export class AppComponent {
     // Deselect previous all rows.
     let prevSelectedRows = this.treeGrid
       .getContent()
-      .querySelectorAll('.bgcolor');
+      .querySelectorAll(".bgcolor");
     for (let i = 0; i < prevSelectedRows.length; i++) {
-      prevSelectedRows[i].classList.remove('bgcolor');
+      prevSelectedRows[i].classList.remove("bgcolor");
       for (let j = 0, l = prevSelectedRows[i].children.length; j < l; j++) {
         prevSelectedRows[i].children[j].setAttribute(
-          'style',
-          prevSelectedRows[i].children[j].getAttribute('prev-style') as string
+          "style",
+          prevSelectedRows[i].children[j].getAttribute("prev-style") as string
         );
       }
     }
 
     let rows = this.treeGrid.getSelectedRows();
     rows.forEach((row: Element) => {
-      row.classList.add('bgcolor');
+      row.classList.add("bgcolor");
       for (let j = 0, l = row.children.length; j < l; j++) {
-        let style = row.children[j].getAttribute('style') as string;
+        let style = row.children[j].getAttribute("style") as string;
         if (style === null) {
-          style = '';
+          style = "";
         }
-        row.children[j].setAttribute('prev-style', style);
-        const backgroundColorCSSName = 'background-color';
+        row.children[j].setAttribute("prev-style", style);
+        const backgroundColorCSSName = "background-color";
         const letterIndex = style.search(backgroundColorCSSName);
         const prevStyle = style.slice(0, letterIndex);
         const nextStyleWithBackgroundColor = style.slice(letterIndex);
-        const semiColonIndex = nextStyleWithBackgroundColor.search(';');
+        const semiColonIndex = nextStyleWithBackgroundColor.search(";");
         const nextStyle = nextStyleWithBackgroundColor.slice(
           semiColonIndex + 1
         );
 
         row.children[j].setAttribute(
-          'style',
-          prevStyle + 'background-color: steelblue;' + nextStyle
+          "style",
+          prevStyle + "background-color: steelblue;" + nextStyle
         );
       }
     });
@@ -1003,38 +1003,38 @@ export class AppComponent {
     // Deselect previous all rows.
     let prevSelectedRows = this.treeGrid
       .getContent()
-      .querySelectorAll('.bgcolor');
+      .querySelectorAll(".bgcolor");
     for (let i = 0; i < prevSelectedRows.length; i++) {
-      prevSelectedRows[i].classList.remove('bgcolor');
+      prevSelectedRows[i].classList.remove("bgcolor");
       for (let j = 0, l = prevSelectedRows[i].children.length; j < l; j++) {
         prevSelectedRows[i].children[j].setAttribute(
-          'style',
-          prevSelectedRows[i].children[j].getAttribute('prev-style') as string
+          "style",
+          prevSelectedRows[i].children[j].getAttribute("prev-style") as string
         );
       }
     }
 
     let rows = this.treeGrid.getSelectedRows();
     rows.forEach((row: Element) => {
-      row.classList.add('bgcolor');
+      row.classList.add("bgcolor");
       for (let j = 0, l = row.children.length; j < l; j++) {
-        let style = row.children[j].getAttribute('style') as string;
+        let style = row.children[j].getAttribute("style") as string;
         if (style === null) {
-          style = '';
+          style = "";
         }
-        row.children[j].setAttribute('prev-style', style);
-        const backgroundColorCSSName = 'background-color';
+        row.children[j].setAttribute("prev-style", style);
+        const backgroundColorCSSName = "background-color";
         const letterIndex = style.search(backgroundColorCSSName);
         const prevStyle = style.slice(0, letterIndex);
         const nextStyleWithBackgroundColor = style.slice(letterIndex);
-        const semiColonIndex = nextStyleWithBackgroundColor.search(';');
+        const semiColonIndex = nextStyleWithBackgroundColor.search(";");
         const nextStyle = nextStyleWithBackgroundColor.slice(
           semiColonIndex + 1
         );
 
         row.children[j].setAttribute(
-          'style',
-          prevStyle + 'background-color: steelblue;' + nextStyle
+          "style",
+          prevStyle + "background-color: steelblue;" + nextStyle
         );
       }
     });
@@ -1045,26 +1045,26 @@ export class AppComponent {
     if (rowIndexes == null) return;
     rowIndexes.forEach((rowInd: any) => {
       var row = this.treeGrid.getRows()[rowInd];
-      row.classList.remove('bgcolor');
-      row.classList.add('pink-row');
+      row.classList.remove("bgcolor");
+      row.classList.add("pink-row");
       for (let j = 0, l = row.children.length; j < l; j++) {
-        let style = row.children[j].getAttribute('style') as string;
+        let style = row.children[j].getAttribute("style") as string;
         if (style === null) {
-          style = '';
+          style = "";
         }
-        row.children[j].setAttribute('prev-style', style);
-        const backgroundColorCSSName = 'background-color';
+        row.children[j].setAttribute("prev-style", style);
+        const backgroundColorCSSName = "background-color";
         const letterIndex = style.search(backgroundColorCSSName);
         const prevStyle = style.slice(0, letterIndex);
         const nextStyleWithBackgroundColor = style.slice(letterIndex);
-        const semiColonIndex = nextStyleWithBackgroundColor.search(';');
+        const semiColonIndex = nextStyleWithBackgroundColor.search(";");
         const nextStyle = nextStyleWithBackgroundColor.slice(
           semiColonIndex + 1
         );
 
         row.children[j].setAttribute(
-          'style',
-          prevStyle + 'background-color: pink;' + nextStyle
+          "style",
+          prevStyle + "background-color: pink;" + nextStyle
         );
       }
     });
@@ -1073,12 +1073,12 @@ export class AppComponent {
     if (rowIndexes == null) return;
     rowIndexes.forEach((rowInd: any) => {
       var row = this.treeGrid.getRows()[rowInd];
-      row.classList.remove('pink-row');
+      row.classList.remove("pink-row");
 
       for (let j = 0, l = row.children.length; j < l; j++) {
         row.children[j].setAttribute(
-          'style',
-          row.children[j].getAttribute('prev-style') as string
+          "style",
+          row.children[j].getAttribute("prev-style") as string
         );
       }
     });
