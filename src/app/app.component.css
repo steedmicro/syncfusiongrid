@@ -1,0 +1,41 @@
+html,
+body,
+#dialog-container {
+  display: block;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+#container {
+  visibility: hidden;
+}
+
+.e-dialog {
+  top: 0px !important;
+}
+
+.e-label {
+  margin-top: 10px;
+  float: right !important;
+}
+.e-input-text {
+  margin-bottom: 5px;
+}
+.form-group {
+  margin-bottom: 0.2rem;
+}
+.alert {
+  margin-bottom: 0.2rem;
+}
+.e-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.pink-row {
+  background-color: purple !important;
+}
+.bgcolor {
+  background-color: steelblue !important;
+}

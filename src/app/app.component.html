@@ -1,0 +1,345 @@
+<div class="control-section">
+  <ejs-dialog
+    id="dialog"
+    #dialog
+    [target]="targetElement"
+    [visible]="false"
+    width="50%"
+    style="margin-top: 20px"
+  >
+    <form [formGroup]="dialogForm" novalidate id="formId">
+      <input
+        class="e-input-text"
+        type="hidden"
+        formControlName="columnField"
+        name="columnField"
+      />
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" style="padding-top: 10px">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Name:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="e-input-text"
+                    type="text"
+                    formControlName="columnName"
+                    name="columnName"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnName!.invalid &&
+                  (columnName!.dirty || columnName!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnName!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Data-Type:</label>
+                </div>
+                <div class="col-md-6">
+                  <ejs-dropdownlist
+                    [dataSource]="columnDataTypes"
+                    formControlName="columnDataType"
+                    name="columnDataType"
+                    required
+                  ></ejs-dropdownlist>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnDataType!.invalid &&
+                  (columnDataType!.dirty || columnDataType!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnDataType!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Default Value:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    class="e-input-text"
+                    type="text"
+                    formControlName="columnDefaultValue"
+                    name="columnDefaultValue"
+                    *ngIf="columnDataType!.value === 'Text'"
+                  />
+                  <input
+                    class="e-input-text"
+                    type="number"
+                    formControlName="columnDefaultValue"
+                    name="columnDefaultValue"
+                    *ngIf="columnDataType!.value === 'Number'"
+                  />
+                  <input
+                    class="e-input-text"
+                    type="checkbox"
+                    formControlName="columnDefaultValue"
+                    name="columnDefaultValue"
+                    *ngIf="columnDataType!.value === 'Boolean'"
+                  />
+                  <input
+                    class="e-input-text"
+                    type="date"
+                    formControlName="columnDefaultValue"
+                    name="columnDefaultValue"
+                    *ngIf="columnDataType!.value === 'Date'"
+                  />
+                  <input
+                    class="e-input-text"
+                    type="text"
+                    formControlName="columnDefaultValue"
+                    name="columnDefaultValue"
+                    *ngIf="columnDataType!.value === 'DropDownList'"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Minimum-Column-Width:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="number"
+                    formControlName="columnMinimumWidth"
+                    name="columnMinimumWidth"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnMinimumWidth!.invalid &&
+                  (columnMinimumWidth!.dirty || columnMinimumWidth!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnMinimumWidth!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Font-size:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="number"
+                    formControlName="columnFontSize"
+                    name="columnFontSize"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnFontSize!.invalid &&
+                  (columnFontSize!.dirty || columnFontSize!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnFontSize!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Font-color:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    ejs-colorpicker
+                    type="color"
+                    id="colorpicker"
+                    formControlName="columnFontColor"
+                    name="columnFontColor"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnFontColor!.invalid &&
+                  (columnFontColor!.dirty || columnFontColor!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnFontColor!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Background-color:</label>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    ejs-colorpicker
+                    type="color"
+                    id="colorpicker"
+                    formControlName="columnBackgroundColor"
+                    name="columnBackgroundColor"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnBackgroundColor!.invalid &&
+                  (columnBackgroundColor!.dirty ||
+                    columnBackgroundColor!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnBackgroundColor!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Alignment:</label>
+                </div>
+                <div class="col-md-6">
+                  <ejs-dropdownlist
+                    [dataSource]="columnAlignments"
+                    formControlName="columnAlignment"
+                    name="columnAlignment"
+                    required
+                  ></ejs-dropdownlist>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnAlignment!.invalid &&
+                  (columnAlignment!.dirty || columnAlignment!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnAlignment!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="e-float-input">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="e-label">Text-wrap:</label>
+                </div>
+                <div class="col-md-6">
+                  <ejs-dropdownlist
+                    [dataSource]="columnTextWraps"
+                    formControlName="columnTextWrap"
+                    name="columnTextWrap"
+                    required
+                  ></ejs-dropdownlist>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  columnTextWrap!.invalid &&
+                  (columnTextWrap!.dirty || columnTextWrap!.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="columnTextWrap!.errors!.required">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttonclass center">
+        <span class="row justify-content-center">
+          <button
+            ejs-button
+            class="e-btn e-success"
+            type="submit"
+            [disabled]="!dialogForm.valid"
+            (click)="onSubmitForm()"
+          >
+            Submit
+          </button>
+          <button ejs-button class="e-btn e-danger" (click)="onCancelForm()">
+            Cancel
+          </button>
+        </span>
+      </div>
+    </form>
+  </ejs-dialog>
+  <ejs-treegrid
+    #treegrid
+    idMapping="TaskID"
+    parentIdMapping="ParentItem"
+    hasChildMapping="isParent"
+    [treeColumnIndex]="1"
+    [enableCollapseAll]="true"
+    [showColumnChooser]="true"
+    [allowResizing]="true"
+    [allowReordering]="true"
+    [allowSorting]="true"
+    [allowRowDragAndDrop]="true"
+    [allowSelection]="true"
+    [allowMultiSorting]="false"
+    [allowFiltering]="isColumnFiltered"
+    [selectionSettings]="{ type: isRowMultiSelected ? 'Multiple' : 'Single' }"
+    [editSettings]="editSettings"
+    [dataSource]="dataSource"
+    [columns]="columns"
+    [contextMenuItems]="contextMenuItems"
+    (contextMenuOpen)="contextMenuOpen($event)"
+    (contextMenuClick)="contextMenuClick($event)"
+    (created)="created($event)"
+    (rowSelected)="rowSelected($event)"
+    (rowDeselected)="rowDeselected($event)"
+  >
+  </ejs-treegrid>
+</div>
